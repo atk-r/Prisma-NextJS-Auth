@@ -14,7 +14,15 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
   password  String
+  wordlists WordList[] // This establishes a one-to-many relation between User and WordList
+}
+
+model WordList {
+  id     Int    @id @default(autoincrement())
+  words  Json   // This field will store the list of words. You can change the type as per your needs.
+  userId Int    // This field is used to establish the relation with User
+  user   User   @relation(fields: [userId], references: [id]) // This sets up the relation
 }
